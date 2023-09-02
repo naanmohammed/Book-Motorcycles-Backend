@@ -4,8 +4,8 @@ class CreateMotorcycles < ActiveRecord::Migration[7.0]
       t.integer :articleID
       t.string :brand
       t.string :model
-      t.date :year
-      t.text :image
+      t.string :year
+      t.string :image
       t.integer :rental_price
 
       t.timestamps
