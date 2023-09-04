@@ -12,6 +12,10 @@ Rails.application.routes.draw do
       get '/reservations', to: 'reservations#index'
       get '/reservations/:id', to: 'reservations#show'
       post '/add_reservation', to: 'reservations#create'
+      get '/motorcycles', to: 'motorcycles#index'
+      get '/motorcycles/:id', to: 'motorcycles#show'
+      post '/add_motorcycle', to: 'motorcycles#create'
+      delete '/motorcycles/:id', to: 'motorcycles#destroy'
     end
   end
 end
