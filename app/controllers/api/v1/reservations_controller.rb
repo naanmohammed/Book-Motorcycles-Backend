@@ -14,15 +14,15 @@ class Api::V1::ReservationsController < ApplicationController
   end
 
   def create
-      @motorcycle = Motorcycle.find(params[:id])
-      @reservation = Reservation.new(reservation_params)
-      @reservation.motorcycle_id = @motorcycle.id
-      @reservation.user_id = current_user.id
-      # @reservation.total_price =
-    if  @reservation.save
-      render json: {message: 'reservation created'}, status: :created
+    @motorcycle = Motorcycle.find(params[:id])
+    @reservation = Reservation.new(reservation_params)
+    @reservation.motorcycle_id = @motorcycle.id
+    @reservation.user_id = current_user.id
+    # @reservation.total_price =
+    if @reservation.save
+      render json: { message: 'reservation created' }, status: :created
     else
-       render json: { error: 'Unable to create reservation' }, status: :unprocessable_entity
+      render json: { error: 'Unable to create reservation' }, status: :unprocessable_entity
     end
   end
 
@@ -39,5 +39,4 @@ class Api::V1::ReservationsController < ApplicationController
   def reservation_params
     params.require(:reservation).permit(:motorcycle_id, :user_id, :total_price, :start_date, :end_date, :city)
   end
-
 end
