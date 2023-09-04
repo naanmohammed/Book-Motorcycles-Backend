@@ -13,6 +13,7 @@ class ApplicationController < ActionController::API
   def decode_token
     auth_header = request.headers['Authorization']
     return unless auth_header
+
     token = auth_header.chars[1]
     begin
       JWT.decode(token, jwt_key, true, { algorithm: 'HS256' })

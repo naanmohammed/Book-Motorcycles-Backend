@@ -17,7 +17,7 @@ gem 'devise'
 
 gem 'rack-cors'
 
-gem "bcrypt"
+gem 'bcrypt'
 
 gem 'jwt'
 
