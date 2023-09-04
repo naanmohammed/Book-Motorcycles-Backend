@@ -13,8 +13,6 @@ gem 'sprockets-rails'
 
 gem 'pg'
 
-gem 'devise'
-
 gem 'rack-cors'
 
 gem 'bcrypt'
