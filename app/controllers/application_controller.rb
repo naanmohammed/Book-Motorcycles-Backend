@@ -1,27 +1,36 @@
 class ApplicationController < ActionController::API
-  def issue_token(user)
-    JWT.encode({ user_id: user.id }, 'secret', 'HS256')
+  helper_method :current_user
+  helper_method :logged_in?
+
+  def jwt_key
+    Rails.application.credentials.jwt_key
   end
 
-  def decoded_token
-    JWT.decode(token, 'secret', true, { algorithm: 'HS256' })
-  rescue StandardError
-    [{ error: 'Invalid Token' }]
+  def encode_token(payload)
+    JWT.encode(payload, jwt_key, 'HS256')
   end
 
-  def token
-    request.headers['Authorization']
+  def decode_token
+    auth_header = request.headers['Authorization']
+    return unless auth_header
+
+    token = auth_header.chars[1]
+    begin
+      JWT.decode(token, jwt_key, true, { algorithm: 'HS256' })
+    rescue JWT::DecodeError
+      nil
+    end
   end
 
-  def user_id
-    decoded_token.first['user_id']
+  def authorized_user
+    decoded_token = decode_token
+    return unless decoded_token
+
+    user_id = decoded_token.first['user_id']
+    @user = User.find_by(id: user_id)
   end
 
-  def current_user
-    User.find_by(id: user_id)
-  end
-
-  def logged_in
-    render json: { error: 'You are not logged in' }, status: :forbidden unless !!current_user
+  def authorize
+    render json: { message: 'You have to log in.' }, status: :unauthorized unless authorized_user
   end
 end
