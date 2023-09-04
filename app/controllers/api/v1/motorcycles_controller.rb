@@ -1,10 +1,8 @@
 class Api::V1::MotorcyclesController < ApplicationController
-  before_action :logged_in
-
   def index
-    motorcycles = Motorcycle.all.order(created_at: :desc)
+    motorcycles = Motorcycle.order(created_at: :desc).includes([:reservations])
     if motorcycles
-      render json: motorcycles, include: [:reservations]
+      render json: motorcycles
     else
       render json: { error: 'No motorcycles yet' }
     end
@@ -13,7 +11,7 @@ class Api::V1::MotorcyclesController < ApplicationController
   def show
     motorcycle = Motorcycle.find_by_id(params[:id])
     if motorcycle
-      render json: motorcycle, include: [:reservations]
+      render json: motorcycle
     else
       render json: { error: 'Unable to find motorcycle' }
     end

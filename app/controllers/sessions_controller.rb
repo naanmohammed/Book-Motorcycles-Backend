@@ -1,6 +1,4 @@
 class Api::V1::SessionsController < ApplicationController
-  before_action :logged_in, only: [:show]
-
   def login
     @user = User.find_by(email: user_params[:email])
 
@@ -39,6 +37,6 @@ class Api::V1::SessionsController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password)
+    params.require(:user).permit(:name, :admin, :email, :password)
   end
 end
