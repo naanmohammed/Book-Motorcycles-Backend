@@ -1,5 +1,5 @@
 class Motorcycle < ApplicationRecord
-  has_many :reservations
+  has_many :reservations, dependent: :destroy
   has_many :users, through: :reservations
 
   validates :brand, :model, :year, :image, presence: true
