@@ -18,7 +18,7 @@ class Api::V1::UsersController < ApplicationController
     elsif user.errors.messages
       render json: { error: user.errors.messages }
     else
-      render json: { error: 'User could not be created. Please try again.' }
+      render json: { error: @user.errors.messages }, status: :unprocessable_entity
     end
   end
 
