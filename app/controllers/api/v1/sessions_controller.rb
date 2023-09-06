@@ -1,44 +1,27 @@
 class Api::V1::SessionsController < ApplicationController
   before_action :logged_in, only: [:show]
 
-  def login
-    @user = User.find_by(email: user_params[:email])
-
-    if @user&.authenticate(user_params[:password])
-      token = encode_token({ user_id: @user.id })
-      session[:user_id] = @user.id
-      render json: { user: {
-        id: @user.id,
-        name: @user.name,
-        email: @user.email,
-        admin: @user.admin
-      }, token: }, status: :ok
+  def create
+    user = User.find_by_username(user_params[:username])
+    if user
+      token = issue_token(user)
+      render json: { user: UserSerializer.new(user), jwt: token }, status: :ok
     else
-      render json: { error: 'Invalid email or password' }, status: :unauthorized
+      render json: { error: 'Incorrect username or password.' }, status: :unauthorized
     end
   end
 
-  def logged_in?
-    if session[:user_id]
-      render json: { logged_in: true, user: User.find(session[:user_id]) }
-    else
-      render json: { logged_in: false }
-    end
+  def show
+    render json: current_user, status: :ok
   end
 
-  def current_user
-    @current_user ||= User.find(session[:user_id]) if
-    session[:user_id]
-  end
-
-  def destroy
-    session.clear
-    render json: { message: 'Successfully logged out' }, status: :ok
+  def logout
+    render json: { message: 'Successfully logged out.' }, status: :ok
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:email, :password)
+    params.require(:user).permit(:username)
   end
 end
