@@ -89,6 +89,4 @@ test:
 #
 production:
   <<: *default
-  database: Book-Motorcycles_production
-  username: Project
-  password: <%= ENV["PROJECT_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
