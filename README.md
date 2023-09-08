@@ -1,4 +1,6 @@
 # Book Motorcycles App
+
+- Final Number of Members : 2
 - [Link to Kanban Board]([https://www.ruby-lang.org/en/](https://github.com/users/naanmohammed/projects/2))
 
   ![Screenshot (376)](https://github.com/naanmohammed/Book-Motorcycles-Backend/assets/124832435/df1b1541-3469-47f5-ba6d-be7594606d49)
