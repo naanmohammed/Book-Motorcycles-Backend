@@ -23,7 +23,7 @@
 
 
 
-# 📖 Book Motorcycles App <a name="about-project"></a>
+# 📖 Book Motorcycles Application <a name="about-project"></a>
 
 > **Book Motorcycles** is a full fledged motorcycle booking application that allows users to book motorcycles from different categories. Users can choose a city, category, type, and price before booking it. The frontend repo is [here](https://github.com/naanmohammed/Book-Motorcycles-Frontend)
 
